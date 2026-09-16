@@ -6,6 +6,7 @@ import PlatformPills from './components/PlatformPills';
 import VideoCard from './components/VideoCard';
 import DownloadModal from './components/DownloadModal';
 import HistoryDrawer from './components/HistoryDrawer';
+import ContentSections from './components/ContentSections';
 import Footer from './components/Footer';
 import { fetchVideoInfo } from './services/api';
 import { SAMPLE_VIDEOS } from './services/sampleData';
@@ -117,71 +118,84 @@ export default function App() {
       />
 
       {/* Main Container */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 py-8 sm:py-12 w-full max-w-5xl mx-auto">
+      <main className="flex-1 flex flex-col items-center justify-center px-4 w-full max-w-5xl mx-auto">
 
-        {/* Logo (Centered Hero when idle, slightly smaller when results exist) */}
-        <div className="mb-6 sm:mb-8 text-center">
-          <UALogo
-            size={currentVideo ? "small" : "large"}
-            onClick={handleReset}
-          />
-          {!currentVideo && (
-            <p className="text-xs sm:text-sm text-gray-500 mt-2 font-normal">
-              Download YouTube, Facebook, Instagram & TikTok videos in one click
-            </p>
-          )}
-        </div>
+        {/* Hero Tool Area (Equally balanced top and bottom) */}
+        <section className="w-full flex flex-col items-center justify-center py-10 sm:py-25 transition-all duration-200">
 
-        {/* Search Bar Pill */}
-        <SearchBar
-          url={url}
-          setUrl={setUrl}
-          onSearch={handleSearch}
-          isLoading={isLoading}
-          selectedPlatform={activePlatform}
-        />
-
-        {/* Platform Quick Filter Pills */}
-        {!currentVideo && (
-          <PlatformPills
-            activePlatform={activePlatform}
-            onSelectPlatform={handleSelectPlatform}
-          />
-        )}
-
-        {/* Error Notification */}
-        {errorMessage && (
-          <div className="w-full max-w-4xl mx-auto mt-4 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center space-x-2.5 animate-in fade-in">
-            <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
-            <span className="flex-1">{errorMessage}</span>
-            <button
-              onClick={() => setErrorMessage('')}
-              className="text-xs font-semibold hover:underline cursor-pointer"
-            >
-              Dismiss
-            </button>
-          </div>
-        )}
-
-        {/* Video Card Results */}
-        {currentVideo && !isLoading && (
-          <div className="w-full">
-            <VideoCard
-              video={currentVideo}
-              onDownload={handleStartDownload}
+          {/* Logo (Centered Hero when idle, slightly smaller when results exist) */}
+          <div className="mb-6 sm:mb-8 text-center">
+            <UALogo
+              size={currentVideo ? "small" : "large"}
+              onClick={handleReset}
             />
+            {!currentVideo && (
+              <div className="mt-3 max-w-2xl mx-auto space-y-1">
+                <h1 className="text-sm sm:text-base text-[#1F1F1F] font-medium tracking-tight">
+                  UA Save – Fast & Free Video Downloader
+                </h1>
+                <p className="text-xs sm:text-sm text-[#5F6368] font-normal">
+                  Download YouTube, Facebook, Instagram & TikTok videos in one click. Fast, free & secure online video downloader. No app needed!
+                </p>
+              </div>
+            )}
+          </div>
 
-            <div className="text-center mt-5">
+          {/* Search Bar Pill */}
+          <SearchBar
+            url={url}
+            setUrl={setUrl}
+            onSearch={handleSearch}
+            isLoading={isLoading}
+            selectedPlatform={activePlatform}
+          />
+
+          {/* Platform Quick Filter Pills */}
+          {!currentVideo && (
+            <PlatformPills
+              activePlatform={activePlatform}
+              onSelectPlatform={handleSelectPlatform}
+            />
+          )}
+
+          {/* Error Notification */}
+          {errorMessage && (
+            <div className="w-full max-w-4xl mx-auto mt-4 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center space-x-2.5 animate-in fade-in">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+              <span className="flex-1">{errorMessage}</span>
               <button
-                onClick={handleReset}
-                className="text-xs text-blue-600 hover:underline font-medium inline-flex items-center space-x-1"
+                onClick={() => setErrorMessage('')}
+                className="text-xs font-semibold hover:underline cursor-pointer"
               >
-                <RefreshCw className="w-3 h-3" />
-                <span>Search another video</span>
+                Dismiss
               </button>
             </div>
-          </div>
-        )}
+          )}
+
+          {/* Video Card Results */}
+          {currentVideo && !isLoading && (
+            <div className="w-full">
+              <VideoCard
+                video={currentVideo}
+                onDownload={handleStartDownload}
+              />
+
+              <div className="text-center mt-5">
+                <button
+                  onClick={handleReset}
+                  className="text-xs text-blue-600 hover:underline font-medium inline-flex items-center space-x-1 cursor-pointer"
+                >
+                  <RefreshCw className="w-3 h-3" />
+                  <span>Search another video</span>
+                </button>
+              </div>
+            </div>
+          )}
+
+        </section>
+
+        {/* Google Material Design 3 Information Sections */}
+        <ContentSections />
 
       </main>
 
