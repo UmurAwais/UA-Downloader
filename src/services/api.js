@@ -25,6 +25,33 @@ function formatDuration(seconds) {
   return `${m}:${pad(s)}`;
 }
 
+// Helper to format view count
+function formatViews(views) {
+  if (!views) return '1.2K';
+  if (typeof views === 'string' && (views.includes('K') || views.includes('M') || views.includes('B') || views.includes('k') || views.includes('m') || views.includes('b'))) {
+    return views.replace(/\s*views?/i, '').trim();
+  }
+  const num = parseInt(views, 10);
+  if (isNaN(num)) return '1.2K';
+  if (num >= 1_000_000_000) return `${(num / 1_000_000_000).toFixed(1)}B`;
+  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
+  if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
+  return `${num}`;
+}
+
+// Helper to format likes
+function formatLikes(likes) {
+  if (!likes) return '500';
+  if (typeof likes === 'string' && (likes.includes('K') || likes.includes('M') || likes.includes('B') || likes.includes('k') || likes.includes('m') || likes.includes('b'))) {
+    return likes.replace(/\s*likes?/i, '').trim();
+  }
+  const num = parseInt(likes, 10);
+  if (isNaN(num)) return '500';
+  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
+  if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
+  return `${num}`;
+}
+
 /**
  * Fetches video metadata dynamically from URL
  * @param {string} url 
@@ -58,14 +85,15 @@ export async function fetchVideoInfo(url) {
   }
 
   // 2. Client-side fallback with real oEmbed metadata
+  const isShort = cleanUrl.includes('/shorts/') || cleanUrl.includes('tiktok.com');
   let title = 'Online Media Video';
   let author = 'Content Creator';
   let thumbnail = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80';
-  let durationSec = 215;
-  let duration = '3:35';
+  let durationSec = isShort ? 60 : 180;
+  let duration = isShort ? '1:00' : '3:00';
   let authorAvatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80';
-  let views = '1.8M views';
-  let likes = '94.2K';
+  let views = '4.8K views';
+  let likes = '530';
 
   if (platform === PLATFORMS.YOUTUBE && videoId) {
     thumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;

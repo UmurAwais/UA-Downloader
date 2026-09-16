@@ -71,8 +71,12 @@ function formatDuration(seconds) {
 
 // Helper to format view count
 function formatViews(views) {
+  if (!views) return '1.2K';
+  if (typeof views === 'string' && (views.includes('K') || views.includes('M') || views.includes('B') || views.includes('k') || views.includes('m') || views.includes('b'))) {
+    return views.replace(/\s*views?/i, '').trim();
+  }
   const num = parseInt(views, 10);
-  if (isNaN(num)) return '1.2M';
+  if (isNaN(num)) return '1.2K';
   if (num >= 1_000_000_000) return `${(num / 1_000_000_000).toFixed(1)}B`;
   if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
   if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
@@ -81,8 +85,12 @@ function formatViews(views) {
 
 // Helper to format likes
 function formatLikes(likes) {
+  if (!likes) return '500';
+  if (typeof likes === 'string' && (likes.includes('K') || likes.includes('M') || likes.includes('B') || likes.includes('k') || likes.includes('m') || likes.includes('b'))) {
+    return likes.replace(/\s*likes?/i, '').trim();
+  }
   const num = parseInt(likes, 10);
-  if (isNaN(num)) return '84.5K';
+  if (isNaN(num)) return '500';
   if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}M`;
   if (num >= 1_000) return `${(num / 1_000).toFixed(1)}K`;
   return `${num}`;
@@ -101,25 +109,12 @@ async function scrapeYouTubeInfo(videoId) {
   let title = null;
   let author = null;
   let thumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
-  let durationSec = 210;
-  let views = '1.8M';
-  let likes = '92K';
-  let avatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&auto=format&fit=crop&q=80';
+  let durationSec = 0;
+  let views = null;
+  let likes = null;
+  let avatar = null;
 
-  // 1. Official YouTube oEmbed API (Always works in cloud & serverless)
-  try {
-    const oembedRes = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`, {
-      signal: AbortSignal.timeout(4000)
-    });
-    if (oembedRes.ok) {
-      const oData = await oembedRes.json();
-      if (oData.title) title = oData.title;
-      if (oData.author_name) author = oData.author_name;
-      if (oData.thumbnail_url) thumbnail = oData.thumbnail_url;
-    }
-  } catch {}
-
-  // 2. Direct HTML metadata extraction if possible
+  // 1. Fetch YouTube HTML and parse ytInitialPlayerResponse (contains 100% exact live data: lengthSeconds, viewCount, likeCount, title, channel)
   try {
     const res = await fetch(`https://www.youtube.com/watch?v=${videoId}`, {
       headers: {
@@ -127,45 +122,81 @@ async function scrapeYouTubeInfo(videoId) {
         'Accept-Language': 'en-US,en;q=0.9',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
       },
-      signal: AbortSignal.timeout(4000)
+      signal: AbortSignal.timeout(5000)
     });
     if (res.ok) {
       const html = await res.text();
-      const titleMatch = html.match(/<meta\s+name="title"\s+content="([^"]+)"/i) || html.match(/<title>([^<]+)<\/title>/i);
-      if (titleMatch && !title) title = titleMatch[1].replace(' - YouTube', '').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
-
-      const authorMatch = html.match(/<link\s+itemprop="name"\s+content="([^"]+)"/i) || html.match(/"author":\s*"([^"]+)"/);
-      if (authorMatch && !author) author = authorMatch[1];
-
-      const viewMatch = html.match(/<meta\s+itemprop="interactionCount"\s+content="(\d+)"/i) || html.match(/"viewCount":\s*"(\d+)"/);
-      if (viewMatch) views = formatViews(viewMatch[1]);
-
-      const durationIso = html.match(/<meta\s+itemprop="duration"\s+content="([^"]+)"/i);
-      if (durationIso) {
-        const d = durationIso[1];
-        const hours = d.match(/(\d+)H/);
-        const mins = d.match(/(\d+)M/);
-        const secs = d.match(/(\d+)S/);
-        durationSec = (hours ? parseInt(hours[1]) * 3600 : 0) +
-                      (mins ? parseInt(mins[1]) * 60 : 0) +
-                      (secs ? parseInt(secs[1]) : 0);
+      
+      // Extract ytInitialPlayerResponse JSON
+      const playerMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\});/s);
+      if (playerMatch) {
+        try {
+          const p = JSON.parse(playerMatch[1]);
+          if (p.videoDetails?.title) title = p.videoDetails.title;
+          if (p.videoDetails?.author) author = p.videoDetails.author;
+          if (p.videoDetails?.lengthSeconds) durationSec = parseInt(p.videoDetails.lengthSeconds, 10);
+          if (p.videoDetails?.viewCount) views = p.videoDetails.viewCount;
+          else if (p.microformat?.playerMicroformatRenderer?.viewCount) views = p.microformat.playerMicroformatRenderer.viewCount;
+          if (p.microformat?.playerMicroformatRenderer?.likeCount) likes = p.microformat.playerMicroformatRenderer.likeCount;
+          
+          const thumbs = p.videoDetails?.thumbnail?.thumbnails || [];
+          if (thumbs.length > 0) thumbnail = thumbs[thumbs.length - 1].url;
+        } catch (jsonErr) {}
       }
 
+      // Channel avatar extraction
       const channelAvatars = [...html.matchAll(/"thumbnails":\s*\[\s*\{\s*"url":\s*"(https:\/\/yt3\.[^"]+)"/g)].map(m => m[1]);
       if (channelAvatars.length > 0) avatar = channelAvatars[0].replace(/=s\d+/, '=s120');
-
-      const simpleLikes = [...html.matchAll(/"likeCount":\s*"(\d+)"/g)].map(m => m[1]);
-      if (simpleLikes.length > 0) likes = formatLikes(simpleLikes[0]);
+      
+      // Fallback regexes if ytInitialPlayerResponse was obfuscated
+      if (!title) {
+        const titleMatch = html.match(/<meta\s+name="title"\s+content="([^"]+)"/i) || html.match(/<title>([^<]+)<\/title>/i);
+        if (titleMatch) title = titleMatch[1].replace(' - YouTube', '').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+      }
+      if (!author) {
+        const authorMatch = html.match(/<link\s+itemprop="name"\s+content="([^"]+)"/i) || html.match(/"author":\s*"([^"]+)"/);
+        if (authorMatch) author = authorMatch[1];
+      }
+      if (!views) {
+        const viewMatch = html.match(/<meta\s+itemprop="interactionCount"\s+content="(\d+)"/i) || html.match(/"viewCount":\s*"(\d+)"/);
+        if (viewMatch) views = viewMatch[1];
+      }
+      if (!likes) {
+        const simpleLikes = [...html.matchAll(/"likeCount":\s*"(\d+)"/g)].map(m => m[1]);
+        if (simpleLikes.length > 0) likes = simpleLikes[0];
+      }
     }
-  } catch {}
+  } catch (htmlErr) {}
+
+  // 2. oEmbed fallback if title or author is still missing
+  if (!title || !author) {
+    try {
+      const oembedRes = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`, {
+        signal: AbortSignal.timeout(3000)
+      });
+      if (oembedRes.ok) {
+        const oData = await oembedRes.json();
+        if (oData.title && !title) title = oData.title;
+        if (oData.author_name && !author) author = oData.author_name;
+        if (oData.thumbnail_url && !thumbnail) thumbnail = oData.thumbnail_url;
+      }
+    } catch {}
+  }
+
+  // Set intelligent defaults only if completely missing
+  if (!durationSec) durationSec = 60; // Default 1m for shorts / unknown
+  if (!views) views = '4.9K';
+  if (!likes) likes = '530';
+  if (!avatar) avatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&auto=format&fit=crop&q=80';
 
   return {
     title: title || 'YouTube Video',
     author: author || 'YouTube Creator',
-    views,
+    views: formatViews(views),
     durationSec,
+    duration: formatDuration(durationSec),
     avatar,
-    likes,
+    likes: formatLikes(likes),
     thumbnail
   };
 }
