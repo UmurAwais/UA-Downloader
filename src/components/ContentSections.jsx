@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { 
-  CheckCircle2, 
-  ShieldCheck, 
-  Zap, 
-  Sparkles, 
-  Laptop, 
-  Smartphone, 
-  Tablet, 
-  ChevronDown, 
-  ChevronUp, 
-  Copy, 
-  Download, 
-  Search, 
-  Video, 
-  Layers, 
-  Globe, 
-  HelpCircle, 
-  Info, 
-  Shield, 
+import {
+  CheckCircle2,
+  ShieldCheck,
+  Zap,
+  Sparkles,
+  Laptop,
+  Smartphone,
+  Tablet,
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  Download,
+  Search,
+  Video,
+  Layers,
+  Globe,
+  HelpCircle,
+  Info,
+  Shield,
   Lock,
   Flame,
   ArrowRight,
@@ -88,72 +88,66 @@ export default function ContentSections() {
   ];
 
   const filteredFaqs = faqs.filter(
-    item => item.q.toLowerCase().includes(faqSearchQuery.toLowerCase()) || 
-            item.a.toLowerCase().includes(faqSearchQuery.toLowerCase())
+    item => item.q.toLowerCase().includes(faqSearchQuery.toLowerCase()) ||
+      item.a.toLowerCase().includes(faqSearchQuery.toLowerCase())
   );
 
   return (
     <section className="w-full max-w-5xl mx-auto mb-12 px-4 space-y-9">
-      
+
       {/* Navigation Pills Header */}
       <div className="flex items-center justify-center space-x-2 sm:space-x-3 border-b border-[#DADCE0] pb-4 flex-wrap gap-y-2">
         <button
           onClick={() => setActiveTab('how-it-works')}
-          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-            activeTab === 'how-it-works'
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${activeTab === 'how-it-works'
               ? 'bg-[#E8F0FE] text-[#1A73E8] shadow-sm font-semibold'
               : 'text-[#5F6368] hover:text-[#1F1F1F] hover:bg-[#F1F3F4]'
-          }`}
+            }`}
         >
           How It Works
         </button>
         <button
           onClick={() => setActiveTab('about')}
-          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-            activeTab === 'about'
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${activeTab === 'about'
               ? 'bg-[#E8F0FE] text-[#1A73E8] shadow-sm font-semibold'
               : 'text-[#5F6368] hover:text-[#1F1F1F] hover:bg-[#F1F3F4]'
-          }`}
+            }`}
         >
           About Us
         </button>
         <button
           onClick={() => setActiveTab('features')}
-          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-            activeTab === 'features'
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${activeTab === 'features'
               ? 'bg-[#E8F0FE] text-[#1A73E8] shadow-sm font-semibold'
               : 'text-[#5F6368] hover:text-[#1F1F1F] hover:bg-[#F1F3F4]'
-          }`}
+            }`}
         >
           Features & Platforms
         </button>
         <button
           onClick={() => setActiveTab('faqs')}
-          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-            activeTab === 'faqs'
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${activeTab === 'faqs'
               ? 'bg-[#E8F0FE] text-[#1A73E8] shadow-sm font-semibold'
               : 'text-[#5F6368] hover:text-[#1F1F1F] hover:bg-[#F1F3F4]'
-          }`}
+            }`}
         >
           FAQs
         </button>
         <button
           onClick={() => setActiveTab('terms')}
-          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-            activeTab === 'terms'
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${activeTab === 'terms'
               ? 'bg-[#E8F0FE] text-[#1A73E8] shadow-sm font-semibold'
               : 'text-[#5F6368] hover:text-[#1F1F1F] hover:bg-[#F1F3F4]'
-          }`}
+            }`}
         >
           Terms & Conditions
         </button>
         <button
           onClick={() => setActiveTab('privacy')}
-          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-            activeTab === 'privacy'
+          className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${activeTab === 'privacy'
               ? 'bg-[#E8F0FE] text-[#1A73E8] shadow-sm font-semibold'
               : 'text-[#5F6368] hover:text-[#1F1F1F] hover:bg-[#F1F3F4]'
-          }`}
+            }`}
         >
           Privacy Policy
         </button>
@@ -164,7 +158,7 @@ export default function ContentSections() {
       {/* ========================================================================= */}
       {(activeTab === 'how-it-works' || activeTab === 'all') && (
         <div id="how-it-works-section" className="space-y-8 animate-in fade-in duration-300">
-          
+
           <div className="text-center max-w-2xl mx-auto">
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#E8F0FE] text-[#1A73E8] mb-3">
               <Zap className="w-3.5 h-3.5" />
@@ -180,7 +174,7 @@ export default function ContentSections() {
 
           {/* 3 Steps Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            
+
             {/* Step 1 */}
             <div className="bg-[#FFFFFF] border border-[#DADCE0] rounded-2xl p-6 flex flex-col justify-between">
               <div>
@@ -194,7 +188,7 @@ export default function ContentSections() {
                   Go to YouTube, Facebook, Instagram, or TikTok and find the video you want. Click <strong className="text-[#1F1F1F]">Share</strong> or copy the URL directly from the address bar.
                 </p>
               </div>
-              
+
               <div className="mt-4 p-3 bg-[#FEF7E0] border border-[#FEEFC3] rounded-xl text-[11px] text-[#B06000] flex items-start space-x-2">
                 <span className="text-sm shrink-0">💡</span>
                 <span><strong>Pro Tip:</strong> On mobile, tap the three-dot menu (⋮) on the video and select &quot;Copy Link.&quot;</span>
@@ -367,7 +361,7 @@ export default function ContentSections() {
       {/* ========================================================================= */}
       {(activeTab === 'about' || activeTab === 'all') && (
         <div id="about-section" className="space-y-8 animate-in fade-in duration-300">
-          
+
           <div className="text-center max-w-2xl mx-auto">
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#E8F0FE] text-[#1A73E8] mb-3">
               <Globe className="w-3.5 h-3.5" />
@@ -416,7 +410,7 @@ export default function ContentSections() {
               What We Do
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              
+
               <div className="bg-[#FFFFFF] border border-[#DADCE0] rounded-xl p-5">
                 <div className="w-9 h-9 rounded-lg bg-[#FCE8E6] flex items-center justify-center mb-3">
                   <YouTubeIcon className="w-5 h-5" />
@@ -483,7 +477,7 @@ export default function ContentSections() {
       {/* ========================================================================= */}
       {(activeTab === 'features' || activeTab === 'all') && (
         <div id="features-section" className="space-y-8 animate-in fade-in duration-300">
-          
+
           <div className="text-center max-w-2xl mx-auto">
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#E8F0FE] text-[#1A73E8] mb-3">
               <Sparkles className="w-3.5 h-3.5" />
@@ -508,7 +502,7 @@ export default function ContentSections() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E8EAED] text-[#1F1F1F]">
-                
+
                 <tr className="hover:bg-[#F8F9FA] transition-colors">
                   <td className="py-3.5 px-6 font-medium">Supported Platforms</td>
                   <td className="py-3.5 px-6 font-semibold text-[#137333] bg-[#E8F0FE]/20">
@@ -577,7 +571,7 @@ export default function ContentSections() {
       {/* ========================================================================= */}
       {(activeTab === 'faqs' || activeTab === 'all') && (
         <div id="faqs-section" className="space-y-6 animate-in fade-in duration-300">
-          
+
           <div className="text-center max-w-2xl mx-auto">
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#E8F0FE] text-[#1A73E8] mb-3">
               <HelpCircle className="w-3.5 h-3.5" />
@@ -594,7 +588,7 @@ export default function ContentSections() {
           {/* Search bar inside FAQs */}
           <div className="max-w-md mx-auto relative">
             <Search className="w-4 h-4 text-[#70757A] absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input 
+            <input
               type="text"
               placeholder="Search frequently asked questions..."
               value={faqSearchQuery}
@@ -602,7 +596,7 @@ export default function ContentSections() {
               className="w-full pl-10 pr-4 py-2.5 rounded-full border border-[#DADCE0] bg-white text-xs text-[#1F1F1F] placeholder-[#70757A] focus:outline-none focus:border-[#1A73E8] focus:ring-1 focus:ring-[#1A73E8] transition-all shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
             />
             {faqSearchQuery && (
-              <button 
+              <button
                 onClick={() => setFaqSearchQuery('')}
                 className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-[#70757A] hover:text-[#1F1F1F]"
               >
@@ -621,7 +615,7 @@ export default function ContentSections() {
               filteredFaqs.map((faq, index) => {
                 const isOpen = openFaqIndex === index;
                 return (
-                  <div 
+                  <div
                     key={index}
                     className="bg-white border border-[#DADCE0] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
                   >
@@ -660,7 +654,7 @@ export default function ContentSections() {
       {/* ========================================================================= */}
       {(activeTab === 'terms' || activeTab === 'all') && (
         <div id="terms-section" className="space-y-8 animate-in fade-in duration-300">
-          
+
           <div className="text-center max-w-2xl mx-auto">
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#E8F0FE] text-[#1A73E8] mb-3">
               <Shield className="w-3.5 h-3.5" />
@@ -793,7 +787,7 @@ export default function ContentSections() {
                 <span className="w-6 h-6 rounded-full bg-[#FCE8E6] text-[#D93025] flex items-center justify-center text-xs font-bold">5</span>
                 <span>Prohibited Use</span>
               </h3>
-              
+
               <div className="space-y-2">
                 <h4 className="text-xs font-semibold text-[#1F1F1F]">Content and Copyright Violations:</h4>
                 <ul className="list-disc list-inside space-y-1 text-xs text-[#444746] pl-2">
@@ -995,7 +989,7 @@ export default function ContentSections() {
       {/* ========================================================================= */}
       {(activeTab === 'privacy' || activeTab === 'all') && (
         <div id="privacy-policy-section" className="space-y-8 animate-in fade-in duration-300">
-          
+
           <div className="text-center max-w-2xl mx-auto">
             <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#E8F0FE] text-[#1A73E8] mb-3">
               <ShieldCheck className="w-3.5 h-3.5" />

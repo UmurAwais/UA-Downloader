@@ -7,26 +7,26 @@
     --google-red: #EA4335;
     --google-yellow: #FBBC05;
     --google-green: #34A853;
-    
+
     --bg-primary: #FFFFFF;
     --bg-secondary: #F8F9FA;
     --bg-card: #FFFFFF;
     --bg-input: #FFFFFF;
     --bg-hover: #F1F3F4;
-    
+
     --text-primary: #202124;
     --text-secondary: #5F6368;
     --text-muted: #70757A;
-    
+
     --border-color: #DFE1E5;
     --border-hover: #DFE1E5;
     --border-focus: #4285F4;
-    
+
     --shadow-search: 0 1px 6px rgba(32, 33, 36, 0.18);
     --shadow-search-hover: 0 2px 8px rgba(32, 33, 36, 0.28);
     --shadow-card: 0 1px 3px rgba(60, 64, 67, 0.15), 0 1px 2px rgba(60, 64, 67, 0.3);
     --shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.15);
-    
+
     --btn-bg: #F8F9FA;
     --btn-border: #F8F9FA;
     --btn-text: #3C4043;
@@ -124,10 +124,12 @@
     left: -35%;
     right: 100%;
   }
+
   60% {
     left: 100%;
     right: -90%;
   }
+
   100% {
     left: 100%;
     right: -90%;
@@ -139,10 +141,12 @@
     left: -200%;
     right: 100%;
   }
+
   60% {
     left: 107%;
     right: -8%;
   }
+
   100% {
     left: 107%;
     right: -8%;
