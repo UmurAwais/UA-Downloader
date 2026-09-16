@@ -4,6 +4,8 @@
  */
 import { detectPlatform, PLATFORMS } from '../utils/urlDetector';
 
+const API_BASE = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/+$/, '') : '';
+
 // Helper to format bytes
 function formatBytes(bytes) {
   if (!bytes || isNaN(bytes)) return '25.0 MB';
@@ -42,7 +44,7 @@ export async function fetchVideoInfo(url) {
 
   // 1. Fetch exact real metadata from backend server
   try {
-    const backendRes = await fetch(`/api/info?url=${encodeURIComponent(cleanUrl)}`, {
+    const backendRes = await fetch(`${API_BASE}/api/info?url=${encodeURIComponent(cleanUrl)}`, {
       signal: AbortSignal.timeout(10000)
     });
     if (backendRes.ok) {
@@ -107,7 +109,7 @@ export async function fetchVideoInfo(url) {
       fps: q.fps,
       isRecommended: q.isRecommended,
       is4K: q.is4K,
-      downloadUrl: `/api/download?url=${encodeURIComponent(cleanUrl)}&quality=${q.height}&title=${encodeURIComponent(title)}&type=video`
+      downloadUrl: `${API_BASE}/api/download?url=${encodeURIComponent(cleanUrl)}&quality=${q.height}&title=${encodeURIComponent(title)}&type=video`
     })),
     {
       id: 'a-320',
@@ -119,7 +121,7 @@ export async function fetchVideoInfo(url) {
       bitrate: '320 Kbps',
       isAudioOnly: true,
       isRecommended: true,
-      downloadUrl: `/api/download?url=${encodeURIComponent(cleanUrl)}&quality=320&title=${encodeURIComponent(title)}&type=audio`
+      downloadUrl: `${API_BASE}/api/download?url=${encodeURIComponent(cleanUrl)}&quality=320&title=${encodeURIComponent(title)}&type=audio`
     },
     {
       id: 'a-128',
@@ -131,7 +133,7 @@ export async function fetchVideoInfo(url) {
       bitrate: '128 Kbps',
       isAudioOnly: true,
       isRecommended: false,
-      downloadUrl: `/api/download?url=${encodeURIComponent(cleanUrl)}&quality=128&title=${encodeURIComponent(title)}&type=audio`
+      downloadUrl: `${API_BASE}/api/download?url=${encodeURIComponent(cleanUrl)}&quality=128&title=${encodeURIComponent(title)}&type=audio`
     }
   ];
 
@@ -162,12 +164,16 @@ export async function fetchVideoInfo(url) {
 export async function triggerBrowserFileDownload(downloadUrl, filename) {
   if (!downloadUrl) return;
 
+  const resolvedUrl = (downloadUrl.startsWith('/api/') && API_BASE) 
+    ? `${API_BASE}${downloadUrl}` 
+    : downloadUrl;
+
   const safeFilename = filename || 'download.mp4';
-  console.log(`[Auto-Download] Automatically saving file to device: ${safeFilename} from ${downloadUrl}`);
+  console.log(`[Auto-Download] Automatically saving file to device: ${safeFilename} from ${resolvedUrl}`);
 
   try {
     // 1. Fetch file as binary Blob directly - 100% reliable across Chrome, Edge, Safari, Firefox
-    const res = await fetch(downloadUrl);
+    const res = await fetch(resolvedUrl);
     if (res.ok) {
       const blob = await res.blob();
       const blobUrl = window.URL.createObjectURL(blob);
@@ -193,7 +199,7 @@ export async function triggerBrowserFileDownload(downloadUrl, filename) {
   try {
     const a = document.createElement('a');
     a.style.display = 'none';
-    a.href = downloadUrl;
+    a.href = resolvedUrl;
     a.setAttribute('download', safeFilename);
     document.body.appendChild(a);
     a.click();
@@ -219,7 +225,7 @@ export function subscribeToLiveDownload(video, format, onProgress, onCompleted, 
   const type = format?.type || 'video';
   const targetSize = format?.size || '50 MB';
 
-  const sseUrl = `/api/progress-download?url=${encodeURIComponent(targetUrl)}&quality=${quality}&title=${encodeURIComponent(cleanTitle)}&type=${type}&targetSize=${encodeURIComponent(targetSize)}`;
+  const sseUrl = `${API_BASE}/api/progress-download?url=${encodeURIComponent(targetUrl)}&quality=${quality}&title=${encodeURIComponent(cleanTitle)}&type=${type}&targetSize=${encodeURIComponent(targetSize)}`;
 
   const eventSource = new EventSource(sseUrl);
 
@@ -269,6 +275,6 @@ export function subscribeToLiveDownload(video, format, onProgress, onCompleted, 
  * Triggers direct download fallback
  */
 export function triggerFileDownload(video, format) {
-  const downloadUrl = format?.downloadUrl || `/api/download?url=${encodeURIComponent(video?.url)}&quality=${format?.height || '1080'}&title=${encodeURIComponent(video?.title || 'video')}&type=${format?.type || 'video'}`;
+  const downloadUrl = format?.downloadUrl || `${API_BASE}/api/download?url=${encodeURIComponent(video?.url)}&quality=${format?.height || '1080'}&title=${encodeURIComponent(video?.title || 'video')}&type=${format?.type || 'video'}`;
   window.location.href = downloadUrl;
 }
