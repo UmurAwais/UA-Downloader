@@ -21,7 +21,7 @@ export default function ContentSections() {
   const [activeTab, setActiveTab] = useState('how-it-works');
 
   return (
-    <section className="w-full max-w-5xl mx-auto mb-12 px-4 space-y-9">
+    <section className="w-full max-w-5xl mx-auto mb-12 px-4 space-y-9 sm:space-y-15">
       
       {/* Navigation Pills Header */}
       <div className="flex items-center justify-center space-x-2 sm:space-x-3 border-b border-[#DADCE0] pb-4 flex-wrap gap-y-2">
