@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
-import GoogleLogo from './components/GoogleLogo';
+import UALogo from './components/UALogo';
 import SearchBar from './components/SearchBar';
 import PlatformPills from './components/PlatformPills';
 import VideoCard from './components/VideoCard';
@@ -121,7 +121,7 @@ export default function App() {
         
         {/* Logo (Centered Hero when idle, slightly smaller when results exist) */}
         <div className="mb-6 sm:mb-8 text-center">
-          <GoogleLogo 
+          <UALogo 
             size={currentVideo ? "small" : "large"} 
             onClick={handleReset} 
           />

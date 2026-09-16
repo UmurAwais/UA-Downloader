@@ -29,7 +29,7 @@ export default function Footer() {
           <div className="flex items-center space-x-5 flex-wrap gap-y-2">
             <button 
               type="button"
-              onClick={() => openInfo('About UA Downloader', 'UA Downloader is a high-speed, lightweight media utility designed to fetch and convert high definition video and audio from YouTube, Facebook, Instagram, and TikTok with zero clutter.')}
+              onClick={() => openInfo('About UA Save', 'UA Save is a high-speed, lightweight media utility designed to fetch and convert high definition video and audio from YouTube, Facebook, Instagram, and TikTok with zero clutter.')}
               className="hover:underline hover:text-[#1F1F1F] transition-colors cursor-pointer"
             >
               About
@@ -68,7 +68,7 @@ export default function Footer() {
             </button>
             <button 
               type="button"
-              onClick={() => openInfo('Legal Disclaimer', 'UA Downloader is an independent utility and is not affiliated with, endorsed by, or sponsored by YouTube, Meta, Instagram, TikTok, or Google.')}
+              onClick={() => openInfo('Legal Disclaimer', 'UA Save is an independent utility and is not affiliated with, endorsed by, or sponsored by YouTube, Meta, Instagram, TikTok, or Google.')}
               className="hover:underline hover:text-[#1F1F1F] transition-colors cursor-pointer"
             >
               Disclaimer

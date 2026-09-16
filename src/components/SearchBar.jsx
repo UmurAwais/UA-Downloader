@@ -45,7 +45,7 @@ export default function SearchBar({
   return (
     <div className="w-full max-w-4xl mx-auto">
       {/* Search Input Container */}
-      <div className="relative flex items-center w-full min-h-[58px] sm:min-h-[62px] px-5 sm:px-6 rounded-full transition-all duration-200 google-search-bar focus-within:ring-2 focus-within:ring-blue-500/20 shadow-xs">
+      <div className="relative flex items-center w-full min-h-14.5 sm:min-h-15.5 px-5 sm:px-6 rounded-full transition-all duration-200 google-search-bar focus-within:ring-2 focus-within:ring-blue-500/20 shadow-xs">
         {/* Left Icon (Platform badge or Search icon) */}
         <div className="flex items-center justify-center mr-3.5 shrink-0">
           {isValid && platform !== PLATFORMS.UNKNOWN ? (

@@ -162,7 +162,7 @@ export default function DownloadModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/35 p-4 animate-in fade-in duration-150">
-      <div className="bg-white rounded-[28px] max-w-[460px] w-full p-6 sm:p-7 shadow-[0_24px_48px_rgba(0,0,0,0.14)] border border-[#DADCE0] relative transition-all">
+      <div className="bg-white rounded-[28px] max-w-115 w-full p-6 sm:p-7 shadow-[0_24px_48px_rgba(0,0,0,0.14)] border border-[#DADCE0] relative transition-all">
         
         {/* Top Header Row with Google Material 3 Icon Container */}
         <div className="flex items-start justify-between">

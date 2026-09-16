@@ -15,14 +15,16 @@ export default function Header({
         <button 
           type="button"
           onClick={onReset}
-          className="text-[#1F1F1F] hover:opacity-85 font-medium flex items-center space-x-2 transition-opacity cursor-pointer group"
+          className="text-[#1F1F1F] flex items-center space-x-1.5 transition-opacity cursor-pointer group select-none"
         >
           <img 
             src={logoImg} 
             alt="UA Logo" 
-            className="h-6 sm:h-7 w-auto object-contain transition-transform group-hover:scale-105" 
+            className="h-7 sm:h-8 w-auto object-contain" 
           />
-          <span className="font-medium text-lg text-[#1F1F1F] tracking-tight">Downloader</span>
+          <span className="font-semibold text-xl sm:text-2xl text-[#111827] tracking-tight leading-none">
+            Save
+          </span>
         </button>
 
         <nav className="hidden md:flex items-center space-x-5 text-xs font-medium text-[#5F6368]">

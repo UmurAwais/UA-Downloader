@@ -104,7 +104,7 @@ export default function VideoCard({ video, onDownload }) {
                 {video.author}
               </span>
               {video.verified && (
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#0B57D0] fill-[#0B57D0] text-white" />
+                <CheckCircle2 className="w-3.5 h-3.5 fill-[#0B57D0] text-white" />
               )}
             </div>
 

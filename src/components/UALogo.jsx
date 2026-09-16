@@ -2,9 +2,9 @@ import React from 'react';
 import logoImg from '../assets/logo.jpg';
 
 /**
- * UA Downloader - Center Brand Logo & Typography
+ * UA Save - Brand Logo & Typography
  */
-export default function GoogleLogo({ size = 'large', onClick }) {
+export default function UALogo({ size = 'large', onClick }) {
   const isSmall = size === 'small';
 
   return (
@@ -15,7 +15,7 @@ export default function GoogleLogo({ size = 'large', onClick }) {
         fontFamily: "'Google Sans', 'Roboto', sans-serif"
       }}
     >
-      <div className="flex items-center space-x-2 sm:space-x-3.5">
+      <div className="flex items-center space-x-1 sm:space-x-1">
         {/* UA Logo Image */}
         <div className="flex items-center">
           <img 
@@ -23,21 +23,21 @@ export default function GoogleLogo({ size = 'large', onClick }) {
             alt="UA Logo" 
             className={`object-contain inline-block ${
               isSmall 
-                ? 'h-6 sm:h-7 w-auto' 
-                : 'h-10 sm:h-12 md:h-11 w-auto'
+                ? 'h-8 sm:h-9 w-auto' 
+                : 'h-12 sm:h-12 md:h-12 w-auto'
             }`}
           />
         </div>
 
-        {/* Downloader Text in Black matching Header */}
+        {/* Save Text */}
         <span 
-          className={`font-medium text-[#1F1F1F] tracking-tight ${
+          className={`font-semibold text-[#111827] tracking-tight leading-none ${
             isSmall 
-              ? 'text-xl sm:text-2xl' 
-              : 'text-4xl sm:text-5xl md:text-6xl'
+              ? 'text-2xl sm:text-3xl' 
+              : 'text-5xl sm:text-4xl md:text-4xl'
           }`}
         >
-          Downloader
+          Save
         </span>
       </div>
     </div>

@@ -1,8 +1,8 @@
-# UA Downloader
+# UA Save
 
 A modern, high-speed media downloader application built with **React**, **Vite**, **TailwindCSS**, **Node.js/Express**, and powered by **yt-dlp** and **FFmpeg**.
 
-![UA Downloader](src/assets/logo.jpg)
+![UA Save](src/assets/logo.jpg)
 
 ## Features
 
