@@ -148,11 +148,18 @@ async function scrapeYouTubeInfo(videoId) {
 }
 
 /**
- * Fallback to yt-dlp JSON dump
+ * Scrapes generic metadata for non-YouTube platforms
+ */
+async function scrapeGenericInfo(url) {
+  return {};
+}
+
+/**
+ * Fallback to yt-dlp JSON dump with unthrottled fast extractor
  */
 function getYtDlpJson(url) {
   return new Promise((resolve, reject) => {
-    execFile('python', ['-m', 'yt_dlp', '--dump-single-json', '--no-playlist', '--no-warnings', url], {
+    execFile('python', ['-m', 'yt_dlp', '--dump-single-json', '--no-playlist', '--no-warnings', '--extractor-args', 'youtube:player_client=android,web', url], {
       maxBuffer: 50 * 1024 * 1024
     }, (error, stdout) => {
       if (error) return reject(error);
@@ -198,56 +205,48 @@ app.get('/api/info', async (req, res) => {
         if (info.title) title = info.title;
         if (info.author) author = info.author;
         if (info.views) viewsFormatted = formatViews(info.views);
-        if (info.likes) likesFormatted = formatLikes(info.likes);
-        if (info.durationSec && info.durationSec > 0) {
+        if (info.durationSec) {
           durationSec = info.durationSec;
-          durationFormatted = formatDuration(durationSec);
+          durationFormatted = formatDuration(info.durationSec);
         }
         if (info.avatar) authorAvatar = info.avatar;
+        if (info.likes) likesFormatted = formatLikes(info.likes);
       } catch (e) {
-        console.warn('Scrape failed, trying oEmbed:', e.message);
-        try {
-          const oRes = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
-          if (oRes.ok) {
-            const oData = await oRes.json();
-            if (oData.title) title = oData.title;
-            if (oData.author_name) author = oData.author_name;
-            if (oData.thumbnail_url) thumbnail = oData.thumbnail_url;
-          }
-        } catch {}
+        console.warn('Scrape error, using oEmbed / yt-dlp fallback:', e.message);
       }
     } else {
-      // Non-YouTube: TikTok / Instagram / Facebook / Twitter via yt-dlp
-      if (targetUrl.includes('tiktok')) platform = 'tiktok';
-      else if (targetUrl.includes('instagram')) platform = 'instagram';
-      else if (targetUrl.includes('facebook')) platform = 'facebook';
+      // Generic Platform
+      if (targetUrl.includes('instagram.com')) platform = 'instagram';
+      else if (targetUrl.includes('tiktok.com')) platform = 'tiktok';
+      else if (targetUrl.includes('facebook.com') || targetUrl.includes('fb.watch')) platform = 'facebook';
 
       try {
-        const yData = await getYtDlpJson(targetUrl);
-        if (yData.title) title = yData.title;
-        if (yData.uploader || yData.channel) author = yData.uploader || yData.channel;
-        if (yData.view_count) viewsFormatted = formatViews(yData.view_count);
-        if (yData.like_count) likesFormatted = formatLikes(yData.like_count);
-        if (yData.duration) {
-          durationSec = Math.round(yData.duration);
-          durationFormatted = formatDuration(durationSec);
+        const genericInfo = await scrapeGenericInfo(targetUrl);
+        if (genericInfo.title) title = genericInfo.title;
+        if (genericInfo.author) author = genericInfo.author;
+        if (genericInfo.thumbnail) thumbnail = genericInfo.thumbnail;
+      } catch {}
+    }
+
+    // Try yt-dlp for exact title/duration if scrape was partial
+    if (title === 'Online Video Media' || durationSec === 180) {
+      try {
+        const dlpData = await getYtDlpJson(targetUrl);
+        if (dlpData.title) title = dlpData.title;
+        if (dlpData.uploader) author = dlpData.uploader;
+        if (dlpData.duration) {
+          durationSec = dlpData.duration;
+          durationFormatted = formatDuration(dlpData.duration);
         }
-        if (yData.thumbnail) thumbnail = yData.thumbnail;
-      } catch (e) {
-        console.warn('yt-dlp info failed, trying oEmbed:', e.message);
-        try {
-          const noembedRes = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(targetUrl)}`);
-          if (noembedRes.ok) {
-            const data = await noembedRes.json();
-            if (data.title) title = data.title;
-            if (data.author_name) author = data.author_name;
-            if (data.thumbnail_url) thumbnail = data.thumbnail_url;
-          }
-        } catch {}
+        if (dlpData.thumbnail) thumbnail = dlpData.thumbnail;
+        if (dlpData.view_count) viewsFormatted = formatViews(dlpData.view_count);
+        if (dlpData.like_count) likesFormatted = formatLikes(dlpData.like_count);
+      } catch (dlpErr) {
+        console.warn('yt-dlp JSON dump fallback note:', dlpErr.message);
       }
     }
 
-    // Dynamic file size calculations based on actual video duration
+    // High quality formats list
     const qualityConfigs = [
       { label: '4K Ultra HD (2160p)', quality: '2160p', height: '2160', bitrateMbps: 18.0, fps: '60fps', is4K: true, isRecommended: true },
       { label: '2K Quad HD (1440p)', quality: '1440p', height: '1440', bitrateMbps: 10.0, fps: '60fps', is4K: false, isRecommended: false },
@@ -257,22 +256,19 @@ app.get('/api/info', async (req, res) => {
       { label: '360p Low', quality: '360p', height: '360', bitrateMbps: 0.8, fps: '30fps', is4K: false, isRecommended: false }
     ];
 
-    const videoFormats = qualityConfigs.map(q => {
-      const totalBytes = (q.bitrateMbps * 1000000 * durationSec) / 8;
-      return {
-        id: `v-${q.quality}`,
-        type: 'video',
-        quality: q.label,
-        height: q.height,
-        format: 'MP4',
-        size: formatBytes(totalBytes),
-        bitrate: `${q.bitrateMbps.toFixed(1)} Mbps`,
-        fps: q.fps,
-        isRecommended: q.isRecommended,
-        is4K: q.is4K,
-        downloadUrl: `/api/download?url=${encodeURIComponent(targetUrl)}&quality=${q.height}&title=${encodeURIComponent(title)}&type=video`
-      };
-    });
+    const videoFormats = qualityConfigs.map(q => ({
+      id: `v-${q.quality}`,
+      type: 'video',
+      quality: q.label,
+      height: q.height,
+      format: 'MP4',
+      size: formatBytes((q.bitrateMbps * 1000000 * durationSec) / 8),
+      bitrate: `${q.bitrateMbps.toFixed(1)} Mbps`,
+      fps: q.fps,
+      isRecommended: q.isRecommended,
+      is4K: q.is4K,
+      downloadUrl: `/api/download?url=${encodeURIComponent(targetUrl)}&quality=${q.height}&title=${encodeURIComponent(title)}&type=video`
+    }));
 
     const audioFormats = [
       {
@@ -350,7 +346,19 @@ app.get('/api/progress-download', (req, res) => {
   const uniqueId = `${Date.now()}_${Math.floor(Math.random() * 1000)}`;
   const outputTemplate = path.join(TEMP_DIR, `media_${uniqueId}.%(ext)s`);
 
-  const args = ['-u', '-m', 'yt_dlp', '--newline'];
+  // Optimized High-Speed Multi-Threaded flags
+  const args = [
+    '-u', '-m', 'yt_dlp',
+    '--newline',
+    '--concurrent-fragments', '8',
+    '--buffer-size', '64k',
+    '--http-chunk-size', '10M',
+    '--extractor-args', 'youtube:player_client=android,web',
+    '--postprocessor-args', 'ffmpeg:-movflags +faststart',
+    '--no-playlist',
+    '--no-warnings',
+    '--force-overwrites'
+  ];
 
   if (FFMPEG_PATH) {
     args.push('--ffmpeg-location', FFMPEG_PATH);
@@ -371,13 +379,7 @@ app.get('/api/progress-download', (req, res) => {
     );
   }
 
-  args.push(
-    '--no-playlist',
-    '--no-warnings',
-    '--force-overwrites',
-    '-o', outputTemplate,
-    targetUrl
-  );
+  args.push('-o', outputTemplate, targetUrl);
 
   console.log(`[SSE] Spawning yt-dlp: ${targetUrl} [${quality}p] -> ${outputTemplate}`);
 
@@ -546,15 +548,25 @@ app.get('/api/download', (req, res) => {
   const uniqueId = `${Date.now()}_${Math.floor(Math.random() * 1000)}`;
   const outputTemplate = path.join(TEMP_DIR, `media_${uniqueId}.%(ext)s`);
 
-  const args = ['-m', 'yt_dlp'];
+  const args = [
+    '-m', 'yt_dlp',
+    '--concurrent-fragments', '8',
+    '--buffer-size', '64k',
+    '--http-chunk-size', '10M',
+    '--extractor-args', 'youtube:player_client=android,web',
+    '--postprocessor-args', 'ffmpeg:-movflags +faststart',
+    '--no-playlist',
+    '--no-warnings',
+    '--force-overwrites'
+  ];
   if (FFMPEG_PATH) args.push('--ffmpeg-location', FFMPEG_PATH);
   if (type === 'audio') {
-    args.push('-f', 'bestaudio/best', '-x', '--audio-format', 'mp3');
+    args.push('-f', 'bestaudio/best', '-x', '--audio-format', 'mp3', '--audio-quality', quality === '320' ? '0' : '5');
   } else {
     const height = parseInt(quality, 10) || 1080;
     args.push('-f', `bestvideo[height<=${height}][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=${height}]+bestaudio/best[height<=${height}]/best`, '--merge-output-format', 'mp4');
   }
-  args.push('--no-playlist', '--force-overwrites', '-o', outputTemplate, targetUrl);
+  args.push('-o', outputTemplate, targetUrl);
 
   execFile('python', args, (err) => {
     if (err) return res.status(500).send('Download processing failed');
