@@ -17,11 +17,11 @@ export default function App() {
   const [currentVideo, setCurrentVideo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  
+
   // Download Modal state
   const [downloadModalOpen, setDownloadModalOpen] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState(null);
-  
+
   // History Drawer & state
   const [historyOpen, setHistoryOpen] = useState(false);
   const [history, setHistory] = useState(() => {
@@ -107,7 +107,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-white text-gray-900">
-      
+
       {/* Top Header */}
       <Header
         onSelectPlatform={handleSelectPlatform}
@@ -118,12 +118,12 @@ export default function App() {
 
       {/* Main Container */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-8 sm:py-12 w-full max-w-5xl mx-auto">
-        
+
         {/* Logo (Centered Hero when idle, slightly smaller when results exist) */}
         <div className="mb-6 sm:mb-8 text-center">
-          <UALogo 
-            size={currentVideo ? "small" : "large"} 
-            onClick={handleReset} 
+          <UALogo
+            size={currentVideo ? "small" : "large"}
+            onClick={handleReset}
           />
           {!currentVideo && (
             <p className="text-xs sm:text-sm text-gray-500 mt-2 font-normal">
@@ -154,7 +154,7 @@ export default function App() {
           <div className="w-full max-w-4xl mx-auto mt-4 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs sm:text-sm flex items-center space-x-2.5 animate-in fade-in">
             <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
             <span className="flex-1">{errorMessage}</span>
-            <button 
+            <button
               onClick={() => setErrorMessage('')}
               className="text-xs font-semibold hover:underline cursor-pointer"
             >

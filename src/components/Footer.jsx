@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Globe, ShieldCheck } from 'lucide-react';
+import { Globe, ShieldCheck, Copyright } from 'lucide-react';
 
 export default function Footer() {
   const [modalContent, setModalContent] = useState(null);
@@ -24,9 +24,9 @@ export default function Footer() {
         </div>
 
         {/* Lower footer links */}
-        <div className="px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="px-6 py-3.5 grid grid-cols-1 md:grid-cols-3 items-center gap-3 text-xs">
           {/* Left links */}
-          <div className="flex items-center space-x-5 flex-wrap gap-y-2">
+          <div className="flex items-center space-x-5 flex-wrap justify-center md:justify-start gap-y-2">
             <button 
               type="button"
               onClick={() => openInfo('About UA Save', 'UA Save is a high-speed, lightweight media utility designed to fetch and convert high definition video and audio from YouTube, Facebook, Instagram, and TikTok with zero clutter.')}
@@ -50,8 +50,24 @@ export default function Footer() {
             </button>
           </div>
 
+          {/* Center Copyright */}
+          <div className="flex items-center justify-center gap-0.5 text-center text-[#5F6368] text-xs my-1 md:my-0">
+            <Copyright className="w-2.5 h-2.5 text-[#5F6368] shrink-0" />
+            <span>
+              {new Date().getFullYear()} <span className="font-medium text-[#1F1F1F]">UA Save</span> by{' '}
+              <a 
+                href="https://worcco.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="font-medium text-[#1F1F1F] hover:text-[#0B57D0] hover:underline transition-colors"
+              >
+                Worcco
+              </a>
+            </span>
+          </div>
+
           {/* Right links */}
-          <div className="flex items-center space-x-5 flex-wrap gap-y-2">
+          <div className="flex items-center space-x-5 flex-wrap justify-center md:justify-end gap-y-2">
             <button 
               type="button"
               onClick={() => openInfo('Privacy Policy', 'We do not store your downloads, personal files, or browsing history on our servers. All downloads are fetched securely and processed for personal use.')}
