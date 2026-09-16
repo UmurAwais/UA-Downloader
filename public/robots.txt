@@ -1,0 +1,6 @@
+# Robots.txt for UA Save (uasave.worcco.com)
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://uasave.worcco.com/sitemap.xml

@@ -1,0 +1,22 @@
+{
+  "name": "UA Save - Free Online Video Downloader",
+  "short_name": "UA Save",
+  "description": "Download YouTube, Instagram, TikTok and Facebook videos in one click. Fast, free & secure.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1A73E8",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

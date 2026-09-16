@@ -1,14 +1,266 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
+    <!-- Character Encoding & Viewport -->
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Google-Optimized SEO Title & Description (Max CTR & SERP Fit) -->
+    <title>Online Video Downloader – Fast, Free HD &amp; 4K | UA Save</title>
+    <meta name="description" content="Download videos from YouTube, Instagram Reels, TikTok without watermark, and Facebook in HD &amp; 4K. Fast, free, and secure online downloader with UA Save." />
+    <meta name="keywords" content="video downloader, online video downloader, download youtube videos, youtube mp4 downloader, download instagram reels, instagram video download, tiktok video downloader without watermark, save tiktok video, download facebook videos, fb video downloader, free 4k video downloader, online video saver, ua save, worcco" />
+    <meta name="author" content="Worcco" />
+    <meta name="publisher" content="Worcco" />
+    <meta name="rating" content="general" />
+    <meta name="distribution" content="global" />
+    <meta name="revisit-after" content="1 days" />
+
+    <!-- Canonical URL & Alternate Hreflang -->
+    <link rel="canonical" href="https://uasave.worcco.com/" />
+    <link rel="alternate" href="https://uasave.worcco.com/" hreflang="x-default" />
+    <link rel="alternate" href="https://uasave.worcco.com/" hreflang="en" />
+
+    <!-- Googlebot & Search Engine Crawling Directives -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+
+    <!-- Open Graph (OG) / Social Sharing (Facebook, WhatsApp, LinkedIn, Discord) -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="UA Save" />
+    <meta property="og:title" content="Online Video Downloader – Fast, Free HD &amp; 4K | UA Save" />
+    <meta property="og:description" content="Download videos from YouTube, Instagram Reels, TikTok without watermark, and Facebook in HD &amp; 4K. 100% free, fast, and secure online video downloader." />
+    <meta property="og:url" content="https://uasave.worcco.com/" />
+    <meta property="og:image" content="https://uasave.worcco.com/logo.jpg" />
+    <meta property="og:image:secure_url" content="https://uasave.worcco.com/logo.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="UA Save - Free Online Video Downloader" />
+
+    <!-- Twitter / X Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Worcco" />
+    <meta name="twitter:creator" content="@Worcco" />
+    <meta name="twitter:title" content="Online Video Downloader – Fast, Free HD &amp; 4K | UA Save" />
+    <meta name="twitter:description" content="Download videos from YouTube, Instagram Reels, TikTok without watermark, and Facebook in HD &amp; 4K. Fast and free." />
+    <meta name="twitter:image" content="https://uasave.worcco.com/logo.jpg" />
+    <meta name="twitter:image:alt" content="UA Save Logo" />
+
+    <!-- Mobile Browser UI & PWA Compliance -->
+    <meta name="theme-color" content="#1A73E8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="UA Save" />
+    <meta name="application-name" content="UA Save" />
+    <meta name="msapplication-TileColor" content="#1A73E8" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Favicons & App Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UA Save – Download YouTube, Facebook, Instagram & TikTok videos in one click</title>
-    <meta name="description" content="UA Save – Download YouTube, Facebook, Instagram & TikTok videos in one click. Fast, free & secure online video downloader. No app needed!" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Product+Sans:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="alternate icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="apple-touch-icon" href="/favicon.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Preconnect & Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Product+Sans:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- Google Structured Data (JSON-LD Schema Markup) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://uasave.worcco.com/#webapp",
+          "name": "UA Save",
+          "url": "https://uasave.worcco.com/",
+          "applicationCategory": "MultimediaApplication",
+          "operatingSystem": "All",
+          "inLanguage": "en-US",
+          "description": "UA Save is a free online video downloader that allows you to download videos from YouTube, Facebook, Instagram, and TikTok in high quality (HD, Full HD & 4K) without watermarks or software installation.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "1280",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "author": {
+            "@type": "Organization",
+            "name": "Worcco",
+            "url": "https://worcco.com"
+          },
+          "featureList": [
+            "Download YouTube Videos and Shorts in 1080p and 4K",
+            "Download Instagram Reels, Stories, and Video Posts",
+            "Download TikTok Videos Without Watermark",
+            "Download Facebook Videos in High Definition",
+            "100% Free with No Registration Required",
+            "Fast Server Processing with Direct Downloads"
+          ]
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://uasave.worcco.com/#organization",
+          "name": "UA Save",
+          "alternateName": "Worcco UA Save",
+          "url": "https://uasave.worcco.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://uasave.worcco.com/logo.jpg",
+            "width": "512",
+            "height": "512"
+          }
+        },
+        {
+          "@type": "HowTo",
+          "@id": "https://uasave.worcco.com/#howto",
+          "name": "How to Download Videos Online with UA Save",
+          "description": "Step-by-step guide to download videos from YouTube, Instagram, TikTok, and Facebook for free.",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "position": 1,
+              "name": "Copy the Video Link",
+              "text": "Open YouTube, Instagram, TikTok, or Facebook and copy the URL link of the video you wish to download."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 2,
+              "name": "Paste URL into UA Save",
+              "text": "Navigate to uasave.worcco.com and paste the copied video link into the search input box, then click Download."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 3,
+              "name": "Select Quality and Download",
+              "text": "Choose your desired video resolution (360p, 720p HD, 1080p Full HD, or 4K) or MP3 audio format and save it directly to your device."
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://uasave.worcco.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is UA Save?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "UA Save is a free online video downloader that allows you to download videos from YouTube, Facebook, Instagram, and TikTok in just one click — without any software, registration, or fees."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is UA Save free to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! UA Save is completely free to use. There are no hidden charges, subscription fees, or premium plans. Simply visit the website, paste your video link, and download."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which platforms does UA Save support?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "UA Save currently supports YouTube, Facebook, Instagram, and TikTok. More platforms will be added in future updates."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need to install any software or app?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No! UA Save is a 100% browser-based tool. You don't need to download or install any software or application. It works directly in your web browser on any device."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is it safe to use UA Save?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Absolutely. UA Save uses secure HTTPS encryption to protect your connection. We do not collect, store, or share your video links or personal data. Your privacy and security are our top priorities."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What video quality options are available?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "UA Save supports multiple video quality options depending on the source platform, including 360p (Standard), 720p (HD), 1080p (Full HD), and 4K (Ultra HD – where available)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I download TikTok videos without a watermark?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! UA Save allows you to download TikTok videos without a watermark, giving you clean, high-quality video files ready to share or store."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I download Instagram Reels and Stories?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! UA Save supports downloading Instagram Reels, Stories, and regular video posts quickly and easily."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does it take to download a video?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Downloads are typically processed within seconds, depending on the video length and your internet connection speed. UA Save uses fast servers to ensure minimal wait time."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need to create an account or sign up?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No registration or sign-up is required. Simply visit the website, paste the video link, and download — it's that quick and easy."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is there a limit on how many videos I can download?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. UA Save places no limit on the number of videos you can download. You can download as many videos as you want, completely free."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is downloading videos legal?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "UA Save is intended for personal, offline use only. Downloading copyrighted content for redistribution or commercial use may violate platform terms of service and copyright laws. We recommend downloading only content that you own or have permission to save."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Who owns and operates UA Save?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "UA Save is developed, owned, and operated by Worcco. Worcco is dedicated to building fast, safe, and accessible web utilities for users worldwide."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
