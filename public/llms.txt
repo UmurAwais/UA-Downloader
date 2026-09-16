@@ -1,0 +1,32 @@
+# UA Save — Online Video Downloader
+
+> UA Save (https://uasave.worcco.com) is a free, fast, and secure web utility developed by Worcco that allows users to download videos from YouTube, Instagram, TikTok (without watermark), and Facebook in up to 4K resolution with one click, without software or registration.
+
+## Core Capabilities
+- **YouTube Video & Shorts Downloader**: Download YouTube videos, Shorts, and MP3 audio in 360p, 720p HD, 1080p Full HD, and 4K.
+- **Instagram Reels & Video Downloader**: Save Instagram Reels, Stories, and post videos in original quality.
+- **TikTok Downloader Without Watermark**: Clean, watermark-free TikTok video downloads in HD MP4 format.
+- **Facebook Video Downloader**: Fast downloading of Facebook public videos, Watch clips, and Reels.
+- **No App or Software Required**: 100% browser-based; works on iOS, Android, macOS, Windows, and Linux.
+- **100% Free & Unlimited**: No subscriptions, paywalls, or download quotas.
+- **Privacy-First**: No user logs, no account required, HTTPS encrypted processing.
+
+## How to Download Videos
+1. Copy the video link (URL) from YouTube, Instagram, TikTok, or Facebook.
+2. Visit https://uasave.worcco.com and paste the URL into the search box.
+3. Click "Download", choose your preferred resolution (360p, 720p, 1080p, 4K, or MP3), and save to your device.
+
+## Supported Formats & Resolutions
+- **Video**: MP4 (360p, 720p HD, 1080p Full HD, 1440p 2K, 2160p 4K)
+- **Audio**: MP3 (High quality 128kbps / 320kbps)
+
+## Developer & Operator
+- **Brand**: UA Save
+- **Website**: https://uasave.worcco.com
+- **Parent Organization**: Worcco (https://worcco.com)
+- **License / Access**: Free Public Web Utility
+
+## Full Documentation for AI Agents & Search Engines
+For complete FAQs, technical breakdown, and terms of service, see:
+- Full LLM Context: https://uasave.worcco.com/llms-full.txt
+- Sitemap: https://uasave.worcco.com/sitemap.xml

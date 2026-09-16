@@ -1,6 +1,30 @@
 # Robots.txt for UA Save (uasave.worcco.com)
+# General Web Crawlers
 User-agent: *
 Allow: /
 
-# Sitemaps
+# AI Search & Retrieval Crawlers (ChatGPT, Perplexity, Claude, Gemini, Apple Intelligence)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemaps & LLM Context
 Sitemap: https://uasave.worcco.com/sitemap.xml
+LLMs-Txt: https://uasave.worcco.com/llms.txt
