@@ -3,6 +3,7 @@ import cors from 'cors';
 import { execFile, execSync, spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,20 +11,30 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Store temporary download processing files in E:\.downloader_media_temp (on Drive E: with 41GB free space, outside Vite workspace)
-const TEMP_DIR = path.resolve('..', '.downloader_media_temp');
-if (!fs.existsSync(TEMP_DIR)) {
-  fs.mkdirSync(TEMP_DIR, { recursive: true });
+// Store temporary download processing files (Drive E: on local dev, /tmp in cloud/Vercel)
+const isVercel = Boolean(process.env.VERCEL);
+let TEMP_DIR = os.tmpdir();
+try {
+  if (!isVercel && fs.existsSync('E:\\')) {
+    TEMP_DIR = path.resolve('..', '.downloader_media_temp');
+  } else {
+    TEMP_DIR = path.join(os.tmpdir(), '.downloader_media_temp');
+  }
+  if (!fs.existsSync(TEMP_DIR)) {
+    fs.mkdirSync(TEMP_DIR, { recursive: true });
+  }
+} catch (e) {
+  TEMP_DIR = os.tmpdir();
 }
 
 // Find ffmpeg location dynamically from imageio_ffmpeg or system
 let FFMPEG_PATH = null;
 try {
-  const out = execSync('python -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"', { encoding: 'utf-8' });
+  const out = execSync('python -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"', { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] });
   FFMPEG_PATH = out.trim();
   console.log('FFmpeg binary located at:', FFMPEG_PATH);
 } catch (e) {
-  console.warn('Could not detect imageio_ffmpeg, checking system ffmpeg...');
+  // Ignored in cloud environments without python
 }
 
 // Helper to format bytes to readable MB/GB
@@ -557,6 +568,10 @@ app.get('/api/download', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`UA Downloader Backend Server running on http://localhost:${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`UA Downloader Backend Server running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
