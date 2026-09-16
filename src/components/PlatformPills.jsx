@@ -19,8 +19,8 @@ export default function PlatformPills({ activePlatform, onSelectPlatform }) {
             type="button"
             onClick={() => onSelectPlatform(p.id)}
             className={`inline-flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-medium cursor-pointer transition-all ${isActive
-                ? 'bg-[#E8F0FE] text-[#1A73E8] shadow-sm font-semibold border border-transparent'
-                : 'bg-[#F8F9FA] hover:bg-[#F1F3F4] text-[#3C4043] border border-[#DADCE0] hover:border-[#BEC1C5] shadow-[0_1px_2px_rgba(0,0,0,0.04)]'
+                ? 'bg-[#E8F0FE] text-[#1A73E8] shadow-sm font-semibold'
+                : 'text-[#5F6368] hover:text-[#1F1F1F] hover:bg-[#F1F3F4]'
               }`}
           >
             <span className="shrink-0">{p.icon}</span>
