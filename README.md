@@ -29,8 +29,8 @@ A modern, high-speed media downloader application built with **React**, **Vite**
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/ua-downloader.git
-cd ua-downloader
+git clone https://github.com/UmurAwais/UA-Downloader.git
+cd UA-Downloader
 ```
 
 ### 2. Install Dependencies
