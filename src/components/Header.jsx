@@ -1,0 +1,81 @@
+import React from 'react';
+import { History } from 'lucide-react';
+import logoImg from '../assets/logo.jpg';
+
+export default function Header({ 
+  onSelectPlatform,
+  onReset,
+  onOpenHistory,
+  historyCount = 0
+}) {
+  return (
+    <header className="w-full flex items-center justify-between px-4 sm:px-8 py-3.5 border-b border-[#DADCE0] bg-white text-sm">
+      {/* Brand Logo & Platform Links */}
+      <div className="flex items-center space-x-6 sm:space-x-8">
+        <button 
+          type="button"
+          onClick={onReset}
+          className="text-[#1F1F1F] hover:opacity-85 font-medium flex items-center space-x-2 transition-opacity cursor-pointer group"
+        >
+          <img 
+            src={logoImg} 
+            alt="UA Logo" 
+            className="h-6 sm:h-7 w-auto object-contain transition-transform group-hover:scale-105" 
+          />
+          <span className="font-medium text-lg text-[#1F1F1F] tracking-tight">Downloader</span>
+        </button>
+
+        <nav className="hidden md:flex items-center space-x-5 text-xs font-medium text-[#5F6368]">
+          <button 
+            type="button"
+            onClick={() => onSelectPlatform('youtube')}
+            className="hover:text-[#1F1F1F] hover:bg-[#F0F4F9] px-2.5 py-1 rounded-full transition-colors cursor-pointer"
+          >
+            YouTube
+          </button>
+          <button 
+            type="button"
+            onClick={() => onSelectPlatform('instagram')}
+            className="hover:text-[#1F1F1F] hover:bg-[#F0F4F9] px-2.5 py-1 rounded-full transition-colors cursor-pointer"
+          >
+            Instagram
+          </button>
+          <button 
+            type="button"
+            onClick={() => onSelectPlatform('tiktok')}
+            className="hover:text-[#1F1F1F] hover:bg-[#F0F4F9] px-2.5 py-1 rounded-full transition-colors cursor-pointer"
+          >
+            TikTok
+          </button>
+          <button 
+            type="button"
+            onClick={() => onSelectPlatform('facebook')}
+            className="hover:text-[#1F1F1F] hover:bg-[#F0F4F9] px-2.5 py-1 rounded-full transition-colors cursor-pointer"
+          >
+            Facebook
+          </button>
+        </nav>
+      </div>
+
+      {/* Right Side Tools: History Button */}
+      {onOpenHistory && (
+        <div className="flex items-center space-x-2">
+          <button
+            type="button"
+            onClick={onOpenHistory}
+            className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-[#444746] hover:text-[#1F1F1F] hover:bg-[#F0F4F9] border border-[#DADCE0] transition-colors cursor-pointer"
+            title="View Download History"
+          >
+            <History className="w-3.5 h-3.5 text-[#0B57D0]" />
+            <span>History</span>
+            {historyCount > 0 && (
+              <span className="ml-1 px-1.5 py-0.2 rounded-full bg-[#D3E3FD] text-[#041E49] text-[10px] font-bold">
+                {historyCount}
+              </span>
+            )}
+          </button>
+        </div>
+      )}
+    </header>
+  );
+}

@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --google-blue: #4285F4;
+    --google-red: #EA4335;
+    --google-yellow: #FBBC05;
+    --google-green: #34A853;
+    
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F8F9FA;
+    --bg-card: #FFFFFF;
+    --bg-input: #FFFFFF;
+    --bg-hover: #F1F3F4;
+    
+    --text-primary: #202124;
+    --text-secondary: #5F6368;
+    --text-muted: #70757A;
+    
+    --border-color: #DFE1E5;
+    --border-hover: #DFE1E5;
+    --border-focus: #4285F4;
+    
+    --shadow-search: 0 1px 6px rgba(32, 33, 36, 0.18);
+    --shadow-search-hover: 0 2px 8px rgba(32, 33, 36, 0.28);
+    --shadow-card: 0 1px 3px rgba(60, 64, 67, 0.15), 0 1px 2px rgba(60, 64, 67, 0.3);
+    --shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    --btn-bg: #F8F9FA;
+    --btn-border: #F8F9FA;
+    --btn-text: #3C4043;
+    --btn-hover-bg: #F1F3F4;
+    --btn-hover-border: #DADCE0;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #202124;
+    font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Custom Google Components and Utility Styles */
+
+.google-search-bar {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.google-search-bar:hover {
+  background-color: var(--bg-input);
+  box-shadow: var(--shadow-search);
+  border-color: transparent;
+}
+
+.google-search-bar:focus-within {
+  background-color: var(--bg-input);
+  box-shadow: var(--shadow-search-hover);
+  border-color: transparent;
+}
+
+.google-btn {
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  color: var(--btn-text);
+  font-family: 'Google Sans', 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s ease-in-out;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.google-btn:hover {
+  background-color: var(--btn-hover-bg);
+  border-color: var(--btn-hover-border);
+  color: var(--text-primary);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.google-btn-primary {
+  background-color: #1A73E8;
+  border-color: #1A73E8;
+  color: #FFFFFF;
+}
+
+.google-btn-primary:hover {
+  background-color: #1557B0;
+  border-color: #1557B0;
+  color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(66, 133, 244, 0.4);
+}
+
+.google-pill {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.google-pill:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-hover);
+}
+
+.google-pill.active {
+  background-color: #E8F0FE;
+  border-color: #1A73E8;
+  color: #1A73E8;
+}
+
+/* Material Progress Bar Animation */
+@keyframes googleProgress {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes googleProgressShort {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
+
+.google-progress-bar {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  background-color: #E0E0E0;
+}
+
+.google-progress-indicator-1 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: #1A73E8;
+  animation: googleProgress 2s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.google-progress-indicator-2 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: #1A73E8;
+  animation: googleProgressShort 2s cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
