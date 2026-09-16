@@ -1,0 +1,54 @@
+import React from 'react';
+
+/**
+ * Google 4-Color Downloader Favicon Icon for Hero Section
+ */
+export default function HeroAppIcon({ onClick }) {
+  return (
+    <div 
+      onClick={onClick}
+      className="inline-flex items-center justify-center cursor-pointer transition-transform hover:scale-105 active:scale-95 duration-200 select-none"
+      title="UA Save – Video Downloader"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 24 24" 
+        fill="none"
+        className="w-12 h-12 sm:w-14 sm:h-14"
+      >
+        {/* Downward Arrow Stem (Google Blue) */}
+        <path 
+          d="M12 3V11" 
+          stroke="#4285F4" 
+          strokeWidth="2.5" 
+          strokeLinecap="round"
+        />
+        
+        {/* Arrow Head (Google Red) */}
+        <path 
+          d="M6 10L12 16L18 10" 
+          stroke="#EA4335" 
+          strokeWidth="2.5" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        />
+        
+        {/* Bottom Tray Left (Google Green) */}
+        <path 
+          d="M4 17V19C4 20.1 4.9 21 6 21H12" 
+          stroke="#34A853" 
+          strokeWidth="2.5" 
+          strokeLinecap="round"
+        />
+        
+        {/* Bottom Tray Right (Google Yellow) */}
+        <path 
+          d="M12 21H18C19.1 21 20 20.1 20 19V17" 
+          stroke="#FBBC05" 
+          strokeWidth="2.5" 
+          strokeLinecap="round"
+        />
+      </svg>
+    </div>
+  );
+}

@@ -9,25 +9,27 @@ export default function Header({
   historyCount = 0
 }) {
   return (
-    <header className="w-full flex items-center justify-between px-4 sm:px-8 py-3.5 border-b border-[#DADCE0] bg-white text-sm">
-      {/* Brand Logo & Platform Links */}
-      <div className="flex items-center space-x-6 sm:space-x-8">
+    <header className="w-full flex items-center justify-between md:grid md:grid-cols-3 px-4 sm:px-8 py-3.5 border-b border-[#DADCE0] bg-white text-sm">
+      {/* Left Column: Mobile Logo / Desktop Platform Links */}
+      <div className="flex items-center justify-start">
+        {/* Mobile Brand Logo */}
         <button 
           type="button"
           onClick={onReset}
-          className="text-[#1F1F1F] flex items-center space-x-1.5 transition-opacity cursor-pointer group select-none"
+          className="md:hidden text-[#1F1F1F] flex items-center space-x-1 cursor-pointer group select-none"
         >
           <img 
             src={logoImg} 
             alt="UA Logo" 
-            className="h-7 sm:h-8 w-auto object-contain" 
+            className="h-7 w-auto object-contain" 
           />
-          <span className="font-semibold text-xl sm:text-2xl text-[#111827] tracking-tight leading-none">
+          <span className="font-semibold text-xl text-[#111827] tracking-tight leading-none">
             Save
           </span>
         </button>
 
-        <nav className="hidden md:flex items-center space-x-5 text-xs font-medium text-[#5F6368]">
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center space-x-3 lg:space-x-5 text-xs font-medium text-[#5F6368]">
           <button 
             type="button"
             onClick={() => onSelectPlatform('youtube')}
@@ -59,13 +61,31 @@ export default function Header({
         </nav>
       </div>
 
-      {/* Right Side Tools: History Button */}
-      {onOpenHistory && (
-        <div className="flex items-center space-x-2">
+      {/* Center Column: UA Save Logo on Desktop */}
+      <div className="hidden md:flex items-center justify-center">
+        <button 
+          type="button"
+          onClick={onReset}
+          className="text-[#1F1F1F] flex items-center space-x-1 transition-transform hover:opacity-90 active:scale-98 cursor-pointer group select-none"
+        >
+          <img 
+            src={logoImg} 
+            alt="UA Logo" 
+            className="h-8 w-auto object-contain" 
+          />
+          <span className="font-semibold text-2xl text-[#111827] tracking-tight leading-none">
+            Save
+          </span>
+        </button>
+      </div>
+
+      {/* Right Column: History Button */}
+      <div className="flex items-center justify-end">
+        {onOpenHistory && (
           <button
             type="button"
             onClick={onOpenHistory}
-            className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-[#444746] hover:text-[#1F1F1F] hover:bg-[#F0F4F9] border border-[#DADCE0] transition-colors cursor-pointer"
+            className="flex items-center space-x-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium text-[#444746] hover:text-[#1F1F1F] hover:bg-[#F0F4F9] border border-[#DADCE0] transition-colors cursor-pointer shrink-0"
             title="View Download History"
           >
             <History className="w-3.5 h-3.5 text-[#0B57D0]" />
@@ -76,8 +96,8 @@ export default function Header({
               </span>
             )}
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 }

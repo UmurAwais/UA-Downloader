@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import UALogo from './components/UALogo';
+import HeroAppIcon from './components/HeroAppIcon';
 import SearchBar from './components/SearchBar';
 import PlatformPills from './components/PlatformPills';
 import VideoCard from './components/VideoCard';
@@ -10,7 +11,7 @@ import ContentSections from './components/ContentSections';
 import Footer from './components/Footer';
 import { fetchVideoInfo } from './services/api';
 import { SAMPLE_VIDEOS } from './services/sampleData';
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import { AlertCircle, RefreshCw, Download } from 'lucide-react';
 
 export default function App() {
   const [url, setUrl] = useState('');
@@ -123,21 +124,17 @@ export default function App() {
         {/* Hero Tool Area (Equally balanced top and bottom) */}
         <section className="w-full flex flex-col items-center justify-center py-10 sm:py-25 transition-all duration-200">
 
-          {/* Logo (Centered Hero when idle, slightly smaller when results exist) */}
+          {/* Hero App Icon & Title */}
           <div className="mb-6 sm:mb-8 text-center">
-            <UALogo
-              size={currentVideo ? "small" : "large"}
-              onClick={handleReset}
-            />
+            <HeroAppIcon onClick={handleReset} />
+
+            {/* <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1F1F1F] tracking-tight mt-3">
+              UA Save
+            </h1> */}
             {!currentVideo && (
-              <div className="mt-3 max-w-2xl mx-auto space-y-1">
-                <h1 className="text-sm sm:text-base text-[#1F1F1F] font-medium tracking-tight">
-                  UA Save – Fast & Free Video Downloader
-                </h1>
-                <p className="text-xs sm:text-sm text-[#5F6368] font-normal">
-                  Download YouTube, Facebook, Instagram & TikTok videos in one click. Fast, free & secure online video downloader. No app needed!
-                </p>
-              </div>
+              <p className="text-xs sm:text-sm text-[#5F6368] font-normal mt-3 sm:mt-5 max-w-xl mx-auto leading-relaxed px-2">
+                Download YouTube, Facebook, Instagram & TikTok videos in one click. Fast, free & secure online video downloader. No app needed!
+              </p>
             )}
           </div>
 
